@@ -3,17 +3,18 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>Archives: 2016 | Hexo</title>
+  <title>glog的使用 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2016/index.html">
+  <meta name="description" content="最近程序写的有点多了,就越来越觉得调试程序的重要性,而我目前调试程序的主要方法还是断点逐步调试和输出信息,就显得非常的低效和落后,所以就很有必要升级一下自己的调试方式了.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="glog的使用">
+<meta property="og:url" content="http://yoursite.com/2016/05/16/first-post/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description">
+<meta property="og:description" content="最近程序写的有点多了,就越来越觉得调试程序的重要性,而我目前调试程序的主要方法还是断点逐步调试和输出信息,就显得非常的低效和落后,所以就很有必要升级一下自己的调试方式了.">
+<meta property="og:updated_time" content="2016-05-18T13:51:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description">
+<meta name="twitter:title" content="glog的使用">
+<meta name="twitter:description" content="最近程序写的有点多了,就越来越觉得调试程序的重要性,而我目前调试程序的主要方法还是断点逐步调试和输出信息,就显得非常的低效和落后,所以就很有必要升级一下自己的调试方式了.">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -62,58 +63,59 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/05/16/first-post/" class="archive-article-date">
-  <time datetime="2016-05-16T05:10:27.000Z" itemprop="datePublished">May 16</time>
+        <section id="main"><article id="post-first-post" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/first-post/" class="article-date">
+  <time datetime="2016-05-16T05:10:27.000Z" itemprop="datePublished">2016-05-16</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/16/first-post/">glog的使用</a>
+    <h1 class="article-title" itemprop="name">
+      glog的使用
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/05/16/hello-world/" class="archive-article-date">
-  <time datetime="2016-05-16T04:49:35.000Z" itemprop="datePublished">May 16</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/16/hello-world/">Hello World</a>
-    </h1>
-  
+        <p>最近程序写的有点多了,就越来越觉得调试程序的重要性,而我目前调试程序的主要方法还是断点逐步调试和输出信息,就显得非常的低效和落后,所以就很有必要升级一下自己的调试方式了.<br><a id="more"></a></p>
+<p>glog我之前就听说过,是google的log库,但一直没去学,因为学习要成本嘛,但正好最近用了google的ceres优化库,ceres依赖了glog库,那就干脆我也就学一下咯.</p>
+<p>那为什么要用log文件来调试呢,和直接输出调试信息有什么区别呢?<br>因为直接在命令行里输出调试信息有许多的问题,第一它输出的信息不能够保存下来,你程序结束了或者崩溃了就看不到了,第二信息是有重要性的,有些是一些运行状态,有些是关键的数据,全部用终端输出就显得乱,同时也使得调试效率低下.<br>所以使用log系统就可以很好的管理各种信息,你也可以精心设计你的日志信息,就可以很快的帮助你调试.</p>
+<p>至于怎么使用,我不想写了,这都是读一些博客和软件文档就能学会的东西.<br>                                            码海漫漫,我在划船.</p>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/16/first-post/" data-id="cio9k1v7n000005ky9xn8lahs" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/16/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
