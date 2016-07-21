@@ -1,0 +1,861 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="SLAM," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Kinect Fusion
+特点
+
+Volumetric voxel grid with TSDF representation
+coarse to fine ICP alignment 
+
+
+优点
+能够实时的得到良好的 mesh（Voxel grid with TSDF）
+动态性能好（Dense ICP alignment）
+重建效果好（ICP）
+
+
+缺陷
+内存静态分配，重建范围受限
+使用 De">
+<meta property="og:type" content="article">
+<meta property="og:title" content="One survey of RGB-D SLAM(Reconsturction)">
+<meta property="og:url" content="https://cvidkal.github.io/2016/07/19/Whelah,Kaess,John Leonard/index.html">
+<meta property="og:site_name" content="空指针">
+<meta property="og:description" content="Kinect Fusion
+特点
+
+Volumetric voxel grid with TSDF representation
+coarse to fine ICP alignment 
+
+
+优点
+能够实时的得到良好的 mesh（Voxel grid with TSDF）
+动态性能好（Dense ICP alignment）
+重建效果好（ICP）
+
+
+缺陷
+内存静态分配，重建范围受限
+使用 De">
+<meta property="og:updated_time" content="2016-07-21T09:32:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="One survey of RGB-D SLAM(Reconsturction)">
+<meta name="twitter:description" content="Kinect Fusion
+特点
+
+Volumetric voxel grid with TSDF representation
+coarse to fine ICP alignment 
+
+
+优点
+能够实时的得到良好的 mesh（Voxel grid with TSDF）
+动态性能好（Dense ICP alignment）
+重建效果好（ICP）
+
+
+缺陷
+内存静态分配，重建范围受限
+使用 De">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://cvidkal.github.io/2016/07/19/Whelah,Kaess,John Leonard/"/>
+
+  <title> One survey of RGB-D SLAM(Reconsturction) | 空指针 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">空指针</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                One survey of RGB-D SLAM(Reconsturction)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-19T02:01:21+08:00" content="2016-07-19">
+              2016-07-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/19/Whelah,Kaess,John Leonard/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/19/Whelah,Kaess,John Leonard/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Kinect-Fusion"><a href="#Kinect-Fusion" class="headerlink" title="Kinect Fusion"></a>Kinect Fusion</h1><ul>
+<li><p>特点</p>
+<ul>
+<li>Volumetric voxel grid with TSDF representation</li>
+<li>coarse to fine ICP alignment </li>
+</ul>
+</li>
+<li>优点<ul>
+<li>能够实时的得到良好的 mesh（Voxel grid with TSDF）</li>
+<li>动态性能好（Dense ICP alignment）</li>
+<li>重建效果好（ICP）</li>
+</ul>
+</li>
+<li>缺陷<ul>
+<li>内存静态分配，重建范围受限</li>
+<li>使用 Dense ICP alignment，运算量大, trajectory error 比较大</li>
+</ul>
+</li>
+<li>Paper<blockquote>
+<p>Newcombe, Richard A., et al. “KinectFusion: Real-time dense surface mapping and tracking.” Mixed and augmented reality (ISMAR), 2011 10th IEEE international symposium on. IEEE, 2011.  </p>
+<p>Izadi, Shahram, et al. “KinectFusion: real-time 3D reconstruction and interaction using a moving depth camera.” Proceedings of the 24th annual ACM symposium on User interface software and technology. ACM, 2011.</p>
+</blockquote>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h1 id="Whelah-Kaess-John-Leonard"><a href="#Whelah-Kaess-John-Leonard" class="headerlink" title="Whelah,Kaess,John Leonard"></a>Whelah,Kaess,John Leonard</h1><h2 id="Kintinuous"><a href="#Kintinuous" class="headerlink" title="Kintinuous"></a>Kintinuous</h2><ul>
+<li>特点<ul>
+<li>改进kinect fusion 的尺度问题</li>
+<li>改进 kinect fusion 的 tracking速度问题</li>
+</ul>
+</li>
+<li>改进方法<ul>
+<li>通过虚拟的移动相机使得 Voxel Grid 一直处于视野的中央</li>
+<li>将视野外的 voxel 使用三角面片来表示</li>
+<li>使用 ICP+VO 的方法来做 tracking，可以在保持 global model 稳定的情况下做到跟踪的速度和稳定性</li>
+</ul>
+</li>
+<li>缺陷</li>
+<li>由于只在视野内使用 TSDF，视野外转换成三角面片，所以对于只对锯齿形的轨迹有较好的结果，对于小回路的轨迹model 就会不好</li>
+<li>Paper<blockquote>
+<p>Whelan, T., Kaess, M., Fallon, M., Johannsson, H., Leonard, J., &amp; McDonald, J. (2012). Kintinuous: Spatially extended kinectfusion.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Robust-tracking-for-real-time-dense-RGB-D-mapping-with-Kintinuous"><a href="#Robust-tracking-for-real-time-dense-RGB-D-mapping-with-Kintinuous" class="headerlink" title="Robust tracking for real-time dense RGB-D mapping with Kintinuous"></a>Robust tracking for real-time dense RGB-D mapping with Kintinuous</h2><ul>
+<li>特点 <ul>
+<li>使用 TUM ICCV11的 dense photometric 的 tracking 方法</li>
+<li>对纹理映射做了改进</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Whelan, T., Johannsson, H., Kaess, M., Leonard, J. J., &amp; McDonald, J. (2012). Robust tracking for real-time dense RGB-D mapping with Kintinuous.<br>F. Steinbruecker, J. Sturm, and D. Cremers, “Real-Time Visual Odometry from Dense RGB-D Images,” in Workshop on Live Dense Reconstruction with Moving Cameras at the Int. Conf. on Computer Vision (ICCV), November 2011.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Deformation-based-loop-closure-for-large-scale-dense-RGB-D-SLAM"><a href="#Deformation-based-loop-closure-for-large-scale-dense-RGB-D-SLAM" class="headerlink" title="Deformation-based loop closure for large scale dense RGB-D SLAM"></a>Deformation-based loop closure for large scale dense RGB-D SLAM</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>改进 loop closure 的性能，同时为了global model consistency，space deformation 做到 as rigid as possible</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Whelan, T., Kaess, M., Leonard, J.J. and McDonald, J., 2013, November. Deformation-based loop closure for large scale dense RGB-D SLAM. In 2013 IEEE/RSJ International Conference on Intelligent Robots and Systems (pp. 548-555). IEEE.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Efficient-incremental-map-segmentation-in-dense-rgb-d-maps"><a href="#Efficient-incremental-map-segmentation-in-dense-rgb-d-maps" class="headerlink" title="Efficient incremental map segmentation in dense rgb-d maps"></a>Efficient incremental map segmentation in dense rgb-d maps</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>利用对物体的移动，做到对物体的分割，得到有一定语义的 map</li>
+<li>用来应对一些动态场景（类似于 kinect fusion）</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Finman, Ross, Thomas Whelan, Michael Kaess, and John J. Leonard. “Efficient incremental map segmentation in dense rgb-d maps.” In 2014 IEEE International Conference on Robotics and Automation (ICRA), pp. 5488-5494. IEEE, 2014.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Real-time-large-scale-dense-RGB-D-SLAM-with-volumetric-fusion"><a href="#Real-time-large-scale-dense-RGB-D-SLAM-with-volumetric-fusion" class="headerlink" title="Real-time large-scale dense RGB-D SLAM with volumetric fusion"></a>Real-time large-scale dense RGB-D SLAM with volumetric fusion</h2><ul>
+<li>特点<ul>
+<li>改进了 Model 的表示形式，使得所有的 mesh 都用 volumetric 的方式来表示，可以做到很好的 Model，同时做到 real-time和 large-scale<ul>
+<li>同时使用了 Dense 的 geometric 和 photometric 的 tracking 来保证 tracking 的稳定性和精度</li>
+<li>使用 Space Deformation 和 visual place recognition 去做 loop closure</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Paper </p>
+<blockquote>
+<p>Whelan, Thomas, Michael Kaess, Hordur Johannsson, Maurice Fallon, John J. Leonard, and John McDonald. “Real-time large-scale dense RGB-D SLAM with volumetric fusion.” The International Journal of Robotics Research 34, no. 4-5 (2015): 598-626.</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h1 id="TUM-组"><a href="#TUM-组" class="headerlink" title="TUM 组"></a>TUM 组</h1><h2 id="Real-Time-Visual-Odometry-from-Dense-RGB-D-Images"><a href="#Real-Time-Visual-Odometry-from-Dense-RGB-D-Images" class="headerlink" title="Real-Time Visual Odometry from Dense RGB-D Images"></a>Real-Time Visual Odometry from Dense RGB-D Images</h2><ul>
+<li>特点<ul>
+<li>使用 Dense Photometric 方法去做 Tracking，与 ICP 相比，速度快，并且在 small Camera Motion 的情况下比 ICP 精度要高，在 large Camera Motion 的情况下 ICP 精度高 </li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Steinbrücker, Frank, Jürgen Sturm, and Daniel Cremers. “Real-time visual odometry from dense RGB-D images.” In Computer Vision Workshops (ICCV Workshops), 2011 IEEE International Conference on, pp. 719-722. IEEE, 2011.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Robust-Odometry-Estimation-for-RGB-D-Cameras"><a href="#Robust-Odometry-Estimation-for-RGB-D-Cameras" class="headerlink" title="Robust Odometry Estimation for RGB-D Cameras"></a>Robust Odometry Estimation for RGB-D Cameras</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>在前面一篇的基础上使用了 Coarse to fine的方法，并且加入Motion Model 和 pixel weight实现了一种 robust odometry.</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Kerl, Christian, Jürgen Sturm, and Daniel Cremers. “Robust odometry estimation for RGB-D cameras.” In Robotics and Automation (ICRA), 2013 IEEE International Conference on, pp. 3748-3754. IEEE, 2013.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Direct-Camera-Pose-Tracking-and-Mapping-With-Signed-Distance-Functions"><a href="#Direct-Camera-Pose-Tracking-and-Mapping-With-Signed-Distance-Functions" class="headerlink" title="Direct Camera Pose Tracking and Mapping With Signed Distance Functions"></a>Direct Camera Pose Tracking and Mapping With Signed Distance Functions</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>使用 TSDF 来表示map，tracking 采用 local-model 的方法，利用当前的深度图去对全局的 TSDF 表示来做 tracking。</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Bylow, Erik, Jürgen Sturm, Christian Kerl, Fredrik Kahl, and Daniel Cremers. “Direct camera pose tracking and mapping with signed distance functions.” In RGB-D workshop on advanced reasoning with depth cameras (RGB-D 2013). 2013.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Real-Time-Camera-Tracking-and-3D-Reconstruction-Using-Signed-Distance-Functions"><a href="#Real-Time-Camera-Tracking-and-3D-Reconstruction-Using-Signed-Distance-Functions" class="headerlink" title="Real-Time Camera Tracking and 3D Reconstruction Using Signed Distance Functions"></a>Real-Time Camera Tracking and 3D Reconstruction Using Signed Distance Functions</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>使用 TSDF 来表示 map，在加上之前的 dense photometric tracker 做RGBD重建系统</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Bylow, Erik, Jürgen Sturm, Christian Kerl, Fredrik Kahl, and Daniel Cremers. “Real-time camera tracking and 3d reconstruction using signed distance functions.” In Robotics: Science and Systems (RSS) Conference 2013, vol. 9. Robotics: Science and Systems, 2013.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Dense-Visual-SLAM-for-RGB-D-Cameras"><a href="#Dense-Visual-SLAM-for-RGB-D-Cameras" class="headerlink" title="Dense Visual SLAM for RGB-D Cameras"></a>Dense Visual SLAM for RGB-D Cameras</h2><ul>
+<li>特点<ul>
+<li>同时使用 photometric 和 geometric 做 tracker，加入 pose Graph 和 loop closure 做一个RGBD slam 系统</li>
+</ul>
+</li>
+<li><p>Paper  </p>
+<blockquote>
+<p>Kerl, Christian, Jürgen Sturm, and Daniel Cremers. “Dense visual SLAM for RGB-D cameras.” In 2013 IEEE/RSJ International Conference on Intelligent Robots and Systems, pp. 2100-2106. IEEE, 2013.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Large-Scale-Multi-Resolution-Surface-Reconstruction-from-RGB-D-Sequences"><a href="#Large-Scale-Multi-Resolution-Surface-Reconstruction-from-RGB-D-Sequences" class="headerlink" title="Large-Scale Multi-Resolution Surface Reconstruction from RGB-D Sequences"></a>Large-Scale Multi-Resolution Surface Reconstruction from RGB-D Sequences</h2><ul>
+<li>特点<ul>
+<li>重建 Multi-Resolution Surface 用来提高 RGB-D 的重建细节精度和纹理精度</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Steinbrucker, Frank, Christian Kerl, and Daniel Cremers. “Large-scale multi-resolution surface reconstruction from RGB-D sequences.” In Proceedings of the IEEE International Conference on Computer Vision, pp. 3264-3271. 2013.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Volumetric-3D-Mapping-in-Real-Time-on-a-CPU"><a href="#Volumetric-3D-Mapping-in-Real-Time-on-a-CPU" class="headerlink" title="Volumetric 3D Mapping in Real-Time on a CPU"></a>Volumetric 3D Mapping in Real-Time on a CPU</h2><ul>
+<li>特点<ul>
+<li>提出了一种可以在 CPU 上计算的 Volumetric 3D Mapping 的方法</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Steinbrücker, Frank, Jürgen Sturm, and Daniel Cremers. “Volumetric 3d mapping in real-time on a cpu.” In 2014 IEEE International Conference on Robotics and Automation (ICRA), pp. 2021-2028. IEEE, 2014.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Towards-Illumination-invariant-3D-Reconstruction-using-ToF-RGB-D-Cameras"><a href="#Towards-Illumination-invariant-3D-Reconstruction-using-ToF-RGB-D-Cameras" class="headerlink" title="Towards Illumination-invariant 3D Reconstruction using ToF RGB-D Cameras"></a>Towards Illumination-invariant 3D Reconstruction using ToF RGB-D Cameras</h2><ul>
+<li>特点<ul>
+<li>提出了一种计算反射率的方法，来去除光照对纹理的影响</li>
+</ul>
+</li>
+<li><p>Paper  </p>
+<blockquote>
+<p>Kerl, Christian, Mohamed Souiai, Jürgen Sturm, and Daniel Cremers. “Towards illumination-invariant 3d reconstruction using tof rgb-d cameras.” In 2014 2nd International Conference on 3D Vision, vol. 1, pp. 39-46. IEEE, 2014.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Dense-Continuous-Time-Tracking-and-Mapping-with-Rolling-Shutter-RGB-D-Cameras"><a href="#Dense-Continuous-Time-Tracking-and-Mapping-with-Rolling-Shutter-RGB-D-Cameras" class="headerlink" title="Dense Continuous-Time Tracking and Mapping with Rolling Shutter RGB-D Cameras"></a>Dense Continuous-Time Tracking and Mapping with Rolling Shutter RGB-D Cameras</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>提出利用 B 样条曲线去拟合轨迹，然后计算出运动参数，从而抵消 rolling shutter 的影响</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Kerl, Christian, Jorg Stuckler, and Daniel Cremers. “Dense continuous-time tracking and mapping with rolling shutter RGB-D cameras.” In Proceedings of the IEEE International Conference on Computer Vision, pp. 2264-2272. 2015.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="CPA-SLAM-Consistent-Plane-Model-Alignment-for-Direct-RGB-D-SLAM"><a href="#CPA-SLAM-Consistent-Plane-Model-Alignment-for-Direct-RGB-D-SLAM" class="headerlink" title="CPA-SLAM: Consistent Plane-Model Alignment for Direct RGB-D SLAM"></a>CPA-SLAM: Consistent Plane-Model Alignment for Direct RGB-D SLAM</h2><ul>
+<li><p>特点</p>
+<ul>
+<li>通过约束重建的 model 中的平面，来达到更好的重建效果</li>
+</ul>
+</li>
+<li><p>Paper</p>
+<blockquote>
+<p>Ma, Lingni, Christian Kerl, Jörg Stückler, and Daniel Cremers. “CPA-SLAM: Consistent Plane-Model Alignment for Direct RGB-D SLAM.”</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SLAM/" rel="tag">#SLAM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/20/Illumination Change/" rel="next" title="关于 RD-SLAM 改进的一些粗略想法">
+                <i class="fa fa-chevron-left"></i> 关于 RD-SLAM 改进的一些粗略想法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/21/new-theme/" rel="prev" title="new theme">
+                new theme <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kinect-Fusion"><span class="nav-number">1.</span> <span class="nav-text">Kinect Fusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Whelah-Kaess-John-Leonard"><span class="nav-number">2.</span> <span class="nav-text">Whelah,Kaess,John Leonard</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kintinuous"><span class="nav-number">2.1.</span> <span class="nav-text">Kintinuous</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Robust-tracking-for-real-time-dense-RGB-D-mapping-with-Kintinuous"><span class="nav-number">2.2.</span> <span class="nav-text">Robust tracking for real-time dense RGB-D mapping with Kintinuous</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deformation-based-loop-closure-for-large-scale-dense-RGB-D-SLAM"><span class="nav-number">2.3.</span> <span class="nav-text">Deformation-based loop closure for large scale dense RGB-D SLAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Efficient-incremental-map-segmentation-in-dense-rgb-d-maps"><span class="nav-number">2.4.</span> <span class="nav-text">Efficient incremental map segmentation in dense rgb-d maps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-time-large-scale-dense-RGB-D-SLAM-with-volumetric-fusion"><span class="nav-number">2.5.</span> <span class="nav-text">Real-time large-scale dense RGB-D SLAM with volumetric fusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TUM-组"><span class="nav-number">3.</span> <span class="nav-text">TUM 组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-Time-Visual-Odometry-from-Dense-RGB-D-Images"><span class="nav-number">3.1.</span> <span class="nav-text">Real-Time Visual Odometry from Dense RGB-D Images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Robust-Odometry-Estimation-for-RGB-D-Cameras"><span class="nav-number">3.2.</span> <span class="nav-text">Robust Odometry Estimation for RGB-D Cameras</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-Camera-Pose-Tracking-and-Mapping-With-Signed-Distance-Functions"><span class="nav-number">3.3.</span> <span class="nav-text">Direct Camera Pose Tracking and Mapping With Signed Distance Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-Time-Camera-Tracking-and-3D-Reconstruction-Using-Signed-Distance-Functions"><span class="nav-number">3.4.</span> <span class="nav-text">Real-Time Camera Tracking and 3D Reconstruction Using Signed Distance Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dense-Visual-SLAM-for-RGB-D-Cameras"><span class="nav-number">3.5.</span> <span class="nav-text">Dense Visual SLAM for RGB-D Cameras</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Large-Scale-Multi-Resolution-Surface-Reconstruction-from-RGB-D-Sequences"><span class="nav-number">3.6.</span> <span class="nav-text">Large-Scale Multi-Resolution Surface Reconstruction from RGB-D Sequences</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volumetric-3D-Mapping-in-Real-Time-on-a-CPU"><span class="nav-number">3.7.</span> <span class="nav-text">Volumetric 3D Mapping in Real-Time on a CPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Towards-Illumination-invariant-3D-Reconstruction-using-ToF-RGB-D-Cameras"><span class="nav-number">3.8.</span> <span class="nav-text">Towards Illumination-invariant 3D Reconstruction using ToF RGB-D Cameras</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dense-Continuous-Time-Tracking-and-Mapping-with-Rolling-Shutter-RGB-D-Cameras"><span class="nav-number">3.9.</span> <span class="nav-text">Dense Continuous-Time Tracking and Mapping with Rolling Shutter RGB-D Cameras</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPA-SLAM-Consistent-Plane-Model-Alignment-for-Direct-RGB-D-SLAM"><span class="nav-number">3.10.</span> <span class="nav-text">CPA-SLAM: Consistent Plane-Model Alignment for Direct RGB-D SLAM</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'cvidkalgithubio';
+      var disqus_identifier = '2016/07/19/Whelah,Kaess,John Leonard/';
+      var disqus_title = "One survey of RGB-D SLAM(Reconsturction)";
+      var disqus_url = 'https://cvidkal.github.io/2016/07/19/Whelah,Kaess,John Leonard/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
