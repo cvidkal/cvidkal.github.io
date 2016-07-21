@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cvidkal.github.io"></form>
@@ -63,6 +63,239 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Kinect-Fusion" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/17/Kinect-Fusion/" class="article-date">
+  <time datetime="2016-07-16T18:05:10.000Z" itemprop="datePublished">2016-07-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/17/Kinect-Fusion/">Kinect Fusion</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>– FrameWork of Kinect Fusion</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cvidkal.github.io/2016/07/17/Kinect-Fusion/" data-id="ciqw153010000r9ky8z9d2klt" class="article-share-link">Partager</a>
+      
+        <a href="https://cvidkal.github.io/2016/07/17/Kinect-Fusion/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Tracking Method" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/24/Tracking Method/" class="article-date">
+  <time datetime="2016-06-24T04:21:58.000Z" itemprop="datePublished">2016-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Tracking-Method"><a href="#Tracking-Method" class="headerlink" title="#Tracking Method "></a>#Tracking Method </h2><h2 id="Feature-Based-Method"><a href="#Feature-Based-Method" class="headerlink" title="Feature-Based Method"></a>Feature-Based Method</h2><ol>
+<li>Feature Descriptor based method</li>
+<li>Patch based based method(pixel by pixel)</li>
+</ol>
+<h2 id="Model-Based-Method"><a href="#Model-Based-Method" class="headerlink" title="Model-Based Method"></a>Model-Based Method</h2><h2 id="small-baseline-tracking"><a href="#small-baseline-tracking" class="headerlink" title="small baseline tracking"></a>small baseline tracking</h2><h2 id="large-baseline-tracking"><a href="#large-baseline-tracking" class="headerlink" title="large baseline tracking"></a>large baseline tracking</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cvidkal.github.io/2016/06/24/Tracking Method/" data-id="ciqw153090002r9kyziedxl28" class="article-share-link">Partager</a>
+      
+        <a href="https://cvidkal.github.io/2016/06/24/Tracking Method/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Illumination Change" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/20/Illumination Change/" class="article-date">
+  <time datetime="2016-06-20T10:36:11.000Z" itemprop="datePublished">2016-06-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Some-improvement-to-RD-SLAM"><a href="#Some-improvement-to-RD-SLAM" class="headerlink" title="#Some improvement to RD-SLAM"></a>#Some improvement to RD-SLAM</h2><p>##1.Divide changed 3D points into illumination change and geometry change</p>
+<h3 id="Illumination-Change"><a href="#Illumination-Change" class="headerlink" title="Illumination Change"></a>Illumination Change</h3><ul>
+<li><p>Description</p>
+<p>  Illumination change will makes feature matching fail, and cause a new feature tracking in the same 3d location.If there are two or more points being close and the photometric appearences are similar, then these 3D points are likely to be the same 3D points in different illumination.</p>
+</li>
+<li><p>How to handle this change</p>
+<p>  Remove the old 3D points and its observations.</p>
+</li>
+</ul>
+<h3 id="Geometry-Change"><a href="#Geometry-Change" class="headerlink" title="Geometry Change"></a>Geometry Change</h3><ul>
+<li><p>Description<br>  Geometry Change means that there are objects moving in the scene, and the 3D Points we have obtained before is invalid now.</p>
+</li>
+<li><p>How to handle this change</p>
+<p>  Remove the old 3D points and its observations, then try to track the new observation(model-based object tracking).</p>
+</li>
+</ul>
+<h3 id="Self-Occlusion"><a href="#Self-Occlusion" class="headerlink" title="Self Occlusion"></a>Self Occlusion</h3><ul>
+<li><p>Description</p>
+<p>If a 3D points should be retained if it cannot observable in current frame due to self occlusion.</p>
+</li>
+<li><p>How to handle this change</p>
+<p>  Retain.</p>
+</li>
+</ul>
+<p>#2. </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cvidkal.github.io/2016/06/20/Illumination Change/" data-id="ciqw1530g0004r9ky1n5am442" class="article-share-link">Partager</a>
+      
+        <a href="https://cvidkal.github.io/2016/06/20/Illumination Change/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-佛家" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/07/佛家/" class="article-date">
+  <time datetime="2016-06-07T07:08:07.000Z" itemprop="datePublished">2016-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>布施度悭贪；持戒度毁犯；忍辱度瞋心；精进度懈怠；禅定度散乱；智慧度愚痴</p>
+<p>五: “智慧”度愚痴</p>
+<p>佛门光明心,不生比较心,不动心,安心,放下执著心</p>
+<p>六: “禅定”度散乱</p>
+<p>铃木大拙<br>弗洛姆<br>约翰克鲁克</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cvidkal.github.io/2016/06/07/佛家/" data-id="ciqw1531u000er9kyyzt7pdjr" class="article-share-link">Partager</a>
+      
+        <a href="https://cvidkal.github.io/2016/06/07/佛家/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Relocalization-Bag-of-Words-vs-Small-Blur-Image" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/02/Relocalization-Bag-of-Words-vs-Small-Blur-Image/" class="article-date">
+  <time datetime="2016-06-02T13:46:50.000Z" itemprop="datePublished">2016-06-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/02/Relocalization-Bag-of-Words-vs-Small-Blur-Image/">Relocalization: Bag of Words vs Small Blur Image</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cvidkal.github.io/2016/06/02/Relocalization-Bag-of-Words-vs-Small-Blur-Image/" data-id="ciqw153060001r9ky5tep80j8" class="article-share-link">Partager</a>
+      
+        <a href="https://cvidkal.github.io/2016/06/02/Relocalization-Bag-of-Words-vs-Small-Blur-Image/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Relocalization-BoW-SLAM/">Relocalization BoW SLAM</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Untitled" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/20/Untitled/" class="article-date">
+  <time datetime="2016-05-20T13:03:12.000Z" itemprop="datePublished">2016-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Wild Life and Human beings</p>
+<p>Hello teachers, My topic is “Wild Life and Human beings”,and what I’m going to present is “Human beings should protect wildlife!”.</p>
+<p>Recent years, there are many kinds of wildlife die out in the world.Some of them lost their habitat, some of them drink polluted water or eat polluted food,some of them can’t adpot to the changing climate,some of them are directly killed by human for their fur or other things.</p>
+<p>So there are many wildlife died due to Human being.But whether is their death nothing serious for us, and we needn’t to care more about their life?And Why should we protect wildlife?</p>
+<p>##Each Individual life is valuable<br>It is clearly that we are pleasure to make friend with some animals or have a pet.And we are also happy if we cured a injured animal,and let it go back to his own life.Why?Because each individual life is cute,beuatiful and valuable,and deserve to protect.</p>
+<p>##Protect the population more than the Individual<br>But in fact, the reason why we care about their individual life isn’t due to their individual distinction, it is more about our own humanity.For not every people will protect wildlife, and many people even kill wildlifes.Because the difference between two persons is much huger than two individual wildlifes.Animals or other living things inherit their appearence,physical body from their parents,and also their living method.But human is different due to our mind. We have two person who have same apperance,but we have no two person having same mind.With our mind,we can eat whatever we like,some eat meats,some eat vegetables, and we can think and live differently with any other ones,<br>some believe god,but some don’t.So what we protect indeed is population rather than the individual wildlife.</p>
+<p>##Protect Earth or ourselves?<br>Protecting the population is one important part in protecting the complexity of the global ecosystem.So we protect wildlife for protecting the earth, isn’t it?I don’t think so.The earth isn’t fragile as we think.There are some many disater in the history which makes almost all the living things in the world dead.But there are also some many lifes in our world.But our human is fragile,if the tempature gets 10 degree centigrade higher,we will die.If the sea level gets 10 centimeter higer, we will die.So if we want to be alive in the world,we must protect wildlife,must protect the biodiversity.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cvidkal.github.io/2016/05/20/Untitled/" data-id="ciqw1530p0009r9ky4g12i6j5" class="article-share-link">Partager</a>
+      
+        <a href="https://cvidkal.github.io/2016/05/20/Untitled/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Wild-life-and-Human-Beings" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -95,9 +328,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cvidkal.github.io/2016/05/20/Wild-life-and-Human-Beings/" data-id="ciofpcy7e0001n1ky6pw69fqx" class="article-share-link">Share</a>
+      <a data-url="https://cvidkal.github.io/2016/05/20/Wild-life-and-Human-Beings/" data-id="ciqw1530k0005r9kyctez6agn" class="article-share-link">Partager</a>
       
-        <a href="https://cvidkal.github.io/2016/05/20/Wild-life-and-Human-Beings/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="https://cvidkal.github.io/2016/05/20/Wild-life-and-Human-Beings/#disqus_thread" class="article-comment-link">Commentaires</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/English-Learning/">English Learning</a></li></ul>
@@ -144,9 +377,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cvidkal.github.io/2016/05/16/first-post/" data-id="ciofpcy780000n1kyalu05pl9" class="article-share-link">Share</a>
+      <a data-url="https://cvidkal.github.io/2016/05/16/first-post/" data-id="ciqw1530l0006r9kyg8cyg6wp" class="article-share-link">Partager</a>
       
-        <a href="https://cvidkal.github.io/2016/05/16/first-post/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="https://cvidkal.github.io/2016/05/16/first-post/#disqus_thread" class="article-comment-link">Commentaires</a>
       
       
     </footer>
@@ -191,9 +424,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cvidkal.github.io/2016/05/16/hello-world/" data-id="ciofpcy7l0003n1kylxh588kv" class="article-share-link">Share</a>
+      <a data-url="https://cvidkal.github.io/2016/05/16/hello-world/" data-id="ciqw15315000dr9ky7842lvas" class="article-share-link">Partager</a>
       
-        <a href="https://cvidkal.github.io/2016/05/16/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="https://cvidkal.github.io/2016/05/16/hello-world/#disqus_thread" class="article-comment-link">Commentaires</a>
       
       
     </footer>
@@ -210,7 +443,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/码海漫漫/">码海漫漫</a></li></ul>
     </div>
@@ -220,9 +453,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/English-Learning/">English Learning</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/English-Learning/">English Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Relocalization-BoW-SLAM/">Relocalization BoW SLAM</a></li></ul>
     </div>
   </div>
 
@@ -230,9 +463,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/English-Learning/" style="font-size: 10px;">English Learning</a>
+      <a href="/tags/English-Learning/" style="font-size: 10px;">English Learning</a> <a href="/tags/Relocalization-BoW-SLAM/" style="font-size: 10px;">Relocalization BoW SLAM</a>
     </div>
   </div>
 
@@ -241,7 +474,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
     </div>
   </div>
 
@@ -249,20 +482,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/05/20/Wild-life-and-Human-Beings/">Wild life and Human Beings</a>
+            <a href="/2016/07/17/Kinect-Fusion/">Kinect Fusion</a>
           </li>
         
           <li>
-            <a href="/2016/05/16/first-post/">glog的使用</a>
+            <a href="/2016/06/24/Tracking Method/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2016/05/16/hello-world/">Hello World</a>
+            <a href="/2016/06/20/Illumination Change/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/07/佛家/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/02/Relocalization-Bag-of-Words-vs-Small-Blur-Image/">Relocalization: Bag of Words vs Small Blur Image</a>
           </li>
         
       </ul>
@@ -278,7 +519,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
